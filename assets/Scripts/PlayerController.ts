@@ -3,6 +3,11 @@ const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
 export class PlayerController extends Component {
+  private _startJump = false;
+  private _jumpTime = 0.2;
+  private _curJumpTime = 0;
+  private _jumpSpeed = 0;
+
   start() {
     input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
   }
@@ -16,8 +21,25 @@ export class PlayerController extends Component {
   }
 
   jumpByStep(step: number) {
-    const curPos = this.node.position;
-    this.node.setPosition(curPos.x + step * 40, curPos.y, curPos.z);
+    this._startJump = true;
+    this._curJumpTime = 0;
+    this._jumpSpeed = (step * 40) / this._jumpTime;
+  }
+
+  protected update(dt: number): void {
+    if (this._startJump) {
+      this._curJumpTime += dt;
+      if (this._curJumpTime > this._jumpTime) {
+        this._startJump = false;
+      } else {
+        const curPos = this.node.position;
+        this.node.setPosition(
+          curPos.x + this._jumpSpeed * dt,
+          curPos.y,
+          curPos.z
+        );
+      }
+    }
   }
 
   protected onDestroy(): void {
