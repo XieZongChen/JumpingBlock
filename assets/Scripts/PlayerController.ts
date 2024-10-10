@@ -1,4 +1,12 @@
-import { _decorator, Component, EventMouse, Input, input, Node, Vec3 } from 'cc';
+import {
+  _decorator,
+  Component,
+  EventMouse,
+  Input,
+  input,
+  Node,
+  Vec3,
+} from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
@@ -23,7 +31,8 @@ export class PlayerController extends Component {
   }
 
   jumpByStep(step: number) {
-    const moveLength = step * 40
+    if (this._startJump) return;
+    const moveLength = step * 40;
     this._startJump = true;
     this._curJumpTime = 0;
     this._jumpSpeed = moveLength / this._jumpTime;
