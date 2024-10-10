@@ -42,7 +42,11 @@ export class PlayerController extends Component {
     this._jumpSpeed = moveLength / this._jumpTime;
     this._curPos = this.node.position;
     Vec3.add(this._targetPos, this._curPos, new Vec3(moveLength, 0, 0));
-    this.bodyAnim.play('jump');
+    if (step === 1) {
+      this.bodyAnim.play('JumpOneStep');
+    } else {
+      this.bodyAnim.play('JumpTwoStep');
+    }
   }
 
   protected update(dt: number): void {
