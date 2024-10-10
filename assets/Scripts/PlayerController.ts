@@ -1,4 +1,4 @@
-import { _decorator, Component, EventMouse, Input, input, Node } from 'cc';
+import { _decorator, Component, EventMouse, Input, input, Node, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
@@ -7,6 +7,8 @@ export class PlayerController extends Component {
   private _jumpTime = 0.2;
   private _curJumpTime = 0;
   private _jumpSpeed = 0;
+  private _targetPos = new Vec3();
+  private _curPos = new Vec3();
 
   start() {
     input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
@@ -21,9 +23,12 @@ export class PlayerController extends Component {
   }
 
   jumpByStep(step: number) {
+    const moveLength = step * 40
     this._startJump = true;
     this._curJumpTime = 0;
-    this._jumpSpeed = (step * 40) / this._jumpTime;
+    this._jumpSpeed = moveLength / this._jumpTime;
+    this._curPos = this.node.position;
+    Vec3.add(this._targetPos, this._curPos, new Vec3(moveLength, 0, 0));
   }
 
   protected update(dt: number): void {
@@ -31,6 +36,7 @@ export class PlayerController extends Component {
       this._curJumpTime += dt;
       if (this._curJumpTime > this._jumpTime) {
         this._startJump = false;
+        this.node.setPosition(this._targetPos);
       } else {
         const curPos = this.node.position;
         this.node.setPosition(
