@@ -36,17 +36,17 @@ export class PlayerController extends Component {
 
   jumpByStep(step: number) {
     if (this._startJump) return;
+    const animName = step === 1 ? 'JumpOneStep' : 'JumpTwoStep';
+    const animState = this.bodyAnim.getState(animName);
+    // 让跳跃时间和动画时间一致
+    this._jumpTime = animState.duration;
     const moveLength = step * 40;
     this._startJump = true;
     this._curJumpTime = 0;
     this._jumpSpeed = moveLength / this._jumpTime;
     this._curPos = this.node.position;
     Vec3.add(this._targetPos, this._curPos, new Vec3(moveLength, 0, 0));
-    if (step === 1) {
-      this.bodyAnim.play('JumpOneStep');
-    } else {
-      this.bodyAnim.play('JumpTwoStep');
-    }
+    this.bodyAnim.play(animName);
   }
 
   protected update(dt: number): void {
