@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, Prefab } from 'cc';
+import { _decorator, Component, instantiate, Prefab } from 'cc';
 const { ccclass, property } = _decorator;
 
 enum BlockType {
