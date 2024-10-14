@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Prefab } from 'cc';
+import { _decorator, Component, instantiate, Node, Prefab } from 'cc';
 import { PlayerController } from './PlayerController';
 const { ccclass, property } = _decorator;
 
@@ -23,6 +23,9 @@ export class GameManager extends Component {
   @property(PlayerController)
   public playerController: PlayerController = null;
 
+  @property(Node)
+  public startMenu: Node = null;
+
   private _road: BlockType[] = [];
 
   start() {
@@ -34,9 +37,11 @@ export class GameManager extends Component {
       case GameState.GS_MENU:
         this.generateRoad();
         this.playerController.setControlActive(false);
+        this.startMenu.active = true;
         break;
       case GameState.GS_PLAYING:
         this.playerController.setControlActive(true);
+        this.startMenu.active = false;
         break;
     }
   }
