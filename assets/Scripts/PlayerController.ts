@@ -22,8 +22,14 @@ export class PlayerController extends Component {
   @property(Animation)
   public bodyAnim: Animation = null;
 
-  start() {
-    input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
+  start() {}
+
+  public setControlActive(active: boolean) {
+    if (active) {
+      input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
+    } else {
+      input.off(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
+    }
   }
 
   onMouseDown(event: EventMouse) {

@@ -640,6 +640,9 @@
       "__expectedType__": "cc.Prefab"
     },
     "roadLength": 50,
+    "playerController": {
+      "__id__": 19
+    },
     "_id": "cfumCH2ZpL8asXQaj4AYuP"
   },
   {
