@@ -32,6 +32,10 @@ export class GameManager extends Component {
     this.setCurrentState(GameState.GS_MENU);
   }
 
+  public onStartBtnClick() {
+    this.setCurrentState(GameState.GS_PLAYING);
+  }
+
   setCurrentState(state: GameState) {
     switch (state) {
       case GameState.GS_MENU:
