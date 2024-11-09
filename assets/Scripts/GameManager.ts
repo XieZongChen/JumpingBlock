@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, Prefab } from 'cc';
+import { _decorator, Component, instantiate, Label, Node, Prefab } from 'cc';
 import { PlayerController } from './PlayerController';
 const { ccclass, property } = _decorator;
 
@@ -26,10 +26,14 @@ export class GameManager extends Component {
   @property(Node)
   public startMenu: Node = null;
 
+  @property(Label)
+  public stepLabel: Label = null;
+
   private _road: BlockType[] = [];
 
   start() {
     this.setCurrentState(GameState.GS_MENU);
+    this.playerController.node.on('JumpEnd', this.onJumpEnd, this);
   }
 
   public onStartBtnClick() {
@@ -48,6 +52,10 @@ export class GameManager extends Component {
         this.startMenu.active = false;
         break;
     }
+  }
+
+  onJumpEnd(value: number) {
+    this.stepLabel.string = value.toString();
   }
 
   generateRoad() {

@@ -18,6 +18,7 @@ export class PlayerController extends Component {
   private _jumpSpeed = 0;
   private _targetPos = new Vec3();
   private _curPos = new Vec3();
+  private _curTotalStep = 0;
 
   @property(Animation)
   public bodyAnim: Animation = null;
@@ -53,6 +54,7 @@ export class PlayerController extends Component {
     this._curPos = this.node.position;
     Vec3.add(this._targetPos, this._curPos, new Vec3(moveLength, 0, 0));
     this.bodyAnim.play(animName);
+    this._curTotalStep += step;
   }
 
   protected update(dt: number): void {
@@ -61,6 +63,7 @@ export class PlayerController extends Component {
       if (this._curJumpTime > this._jumpTime) {
         this._startJump = false;
         this.node.setPosition(this._targetPos);
+        this.node.emit('JumpEnd', this._curTotalStep);
       } else {
         const curPos = this.node.position;
         this.node.setPosition(
