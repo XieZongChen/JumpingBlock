@@ -56,6 +56,18 @@ export class GameManager extends Component {
 
   onJumpEnd(value: number) {
     this.stepLabel.string = value.toString();
+
+    this.checkResult(value);
+  }
+
+  checkResult(totalStep: number) {
+    if (totalStep >= this.roadLength) {
+      this.setCurrentState(GameState.GS_MENU);
+    } else {
+      if (this._road[totalStep] === BlockType.BT_NONE) {
+        this.setCurrentState(GameState.GS_MENU);
+      }
+    }
   }
 
   generateRoad() {
