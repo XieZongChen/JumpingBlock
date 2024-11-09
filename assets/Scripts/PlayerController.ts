@@ -33,6 +33,11 @@ export class PlayerController extends Component {
     }
   }
 
+  public reset() {
+    this.node.setPosition(0, 0, 0);
+    this._curTotalStep = 0;
+  }
+
   onMouseDown(event: EventMouse) {
     if (event.getButton() === 0) {
       this.jumpByStep(1);

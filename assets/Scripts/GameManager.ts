@@ -43,7 +43,9 @@ export class GameManager extends Component {
   setCurrentState(state: GameState) {
     switch (state) {
       case GameState.GS_MENU:
+        this.playerController.reset();
         this.generateRoad();
+        this.stepLabel.string = '';
         this.playerController.setControlActive(false);
         this.startMenu.active = true;
         break;
